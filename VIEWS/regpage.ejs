@@ -1,0 +1,137 @@
+<%- include("./partials/head.ejs") %>
+<style>
+    header,label,input,select{
+        display: block;
+
+    }
+    header{
+        text-align: center;
+    }
+   select{
+
+       width: 100%;
+       height: 30px;
+       margin-top: 10px;
+       margin-bottom: 10px;
+   }
+    input{
+        width: 100%;
+        height: 30px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border: none;
+        border-bottom: 1px solid black;
+    }
+    input:focus-visible{
+        border: none;
+        border-bottom: 1px solid grey;
+    }
+    .contain{
+        margin: auto;
+        width: 100%;
+        margin-top: 50px;
+    }
+    header{
+        margin-bottom: 50px;
+        font-size: 30px;
+    }
+    form{
+        margin: auto;
+        width: 80vw;
+        padding: 20px;
+        height: 500px;
+        /* box-shadow: 0px 5px 5px rgba(128, 128, 128, 0.241); */
+    }
+    button{
+         width: 100%;
+        height: 30px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        background-color: rgb(38, 38, 181);
+        color: white;
+        border-radius: 5px;
+        border: none;
+    }
+    #error{
+        color:rgb(230, 68, 68);
+        text-align: center;
+        padding: 10px;
+        border:1px solid rgb(230, 68, 68);
+        border-radius: 5px;
+        display: none;
+    }
+</style>
+<form action="">
+    <div class="contain">
+        <p id="error"></p>
+        <header>Skillup Africa</header>
+        <header>Bootcamp Registration</header>
+        <label >Email</label>
+    <input type="email" name="email" id="email">
+        <label >First name</label>
+    <input type="text" name="firstname" id="firstname">
+        <label >Lastname</label>
+    <input type="text" name="lastname" id="lastname">
+        <label >Phone Number</label>
+    <input type="tel" name="phoneno" id="phoneno">
+    <select name="gender" id="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select>
+    <label >Age</label>
+    <select name="age"  id="age">
+        <option value="" disabled>Age bracket</option>
+        <option value="14-20">14-20</option>
+        <option value="21-25">21-25</option>
+        <option value="30-above">30-above</option>
+    </select>
+    <button id="submit">Submit</button>
+    </div>
+</form>
+
+<script>
+    const email=document.getElementById("email")
+    const firstname=document.getElementById("firstname")
+    const lastname=document.getElementById("lastname")
+    const gender=document.getElementById("gender")
+    const phoneno=document.getElementById("phoneno")
+    const age=document.getElementById("age")
+    const btn =document.getElementById("submit")
+    const err=document.getElementById("error")
+
+    btn.addEventListener("click",async(e)=>{
+        e.preventDefault()
+        const data={
+            email:email.value,
+            firstname:firstname.value,
+            lastname:lastname.value,
+            gender:gender.value,
+            age:age.value,
+            phoneno:phoneno.value,
+
+        }
+        console.log(data)
+
+        const post=await fetch("/api/register/",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(data)
+        })
+        const json= await post.json()
+        if (!post.ok){
+            console.log(json.error)
+            err.style.display="block"
+            err.innerText=json.error
+        }
+        else{
+
+            window.location.href=json.redirect
+        }
+
+
+    })
+
+
+</script>

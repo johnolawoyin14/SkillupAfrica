@@ -1,0 +1,53 @@
+<%- include("./partials/head.ejs") %>
+<style>
+    .contain{
+        width: 95vw;
+        height: 100vh;
+        padding-left: 20px;
+        margin-right: 20px;
+        overflow: scroll;
+        margin-top: 50px;
+    }
+    a{
+           background-color: green;
+        color: white;
+        text-decoration: none;
+        width: fit-content;
+        padding: 10px;
+        height: 20px;
+        border-radius: 10px;
+        font-size: 10px;
+    }
+</style>
+<h3 class="text-center text-muted my-5">Registered bootcampers</h3>
+<div class="contain">
+    <% if (members){%>
+        
+        <p class="lead">You currently have <%= members.length %> campers</p>
+      
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <td>NAME</td>
+                <td>EMAIL</td>
+                <td>PHONE NO</td>
+                <td>AGE BRACKET</td>
+                <td>GENDER</td>
+            </tr>
+        </thead>
+        <tbody>
+            <% members.forEach(m => {%>
+                <tr>
+                    <th><%= m.firstname %> <%= m.lastname%></th>
+                    <th><%= m.email %></th>
+                    <th><%= m.phoneno %></th>
+                    <th><%= m.age %></th>
+                    <th><%= m.gender %></th>
+                </tr>
+           <%  }); %>
+        </tbody>
+    </table>
+  <%} %>
+
+  <a href="/register">Register</a>
+</div>
